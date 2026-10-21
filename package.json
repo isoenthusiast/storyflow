@@ -1,0 +1,15 @@
+{
+  "name": "storyflow-dev",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional browser verification for StoryFlow; no runtime Node dependency",
+  "license": "MIT",
+  "scripts": {
+    "test:browser": "node tests/browser.mjs",
+    "format:check": "prettier --check webapp/app.js webapp/index.html webapp/style.css webapp/workflow.json tests/browser.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0",
+    "prettier": "3.9.10"
+  }
+}

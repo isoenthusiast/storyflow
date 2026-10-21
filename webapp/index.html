@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#163e38" />
+    <title>StoryFlow · Editorial desk</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="StoryFlow home"
+        ><span class="monogram">s.</span
+        ><span>storyflow<small>THE EDITORIAL DESK</small></span></a
+      >
+      <div class="sidebar-label">YOUR WORKSPACE</div>
+      <button class="nav active" id="activeView">
+        ◉ &nbsp; Writing pipeline <span id="total">0</span></button
+      ><button class="nav" id="archiveView">▤ &nbsp; Archived ideas</button
+      ><button class="nav" id="workflowButton">↗ &nbsp; How we work</button
+      ><button class="nav" id="profileButton">
+        ✧ &nbsp; Your writing voice
+      </button>
+      <div class="sidebar-bottom">
+        <p>Your ideas.<br />Your voice.<br />Your next story.</p>
+        <a href="/api/export">↓ Download desk backup</a
+        ><small>OPEN-SOURCE STARTER</small>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <span class="eyebrow">A LITTLE SPACE FOR BIG IDEAS</span
+        ><span class="connection">Connecting to your desk…</span>
+      </header>
+      <section class="intro">
+        <div>
+          <h1>From a spark<br />to a story<span>.</span></h1>
+          <p>
+            Capture what interests you. Find the angle. Make it worth sharing.
+          </p>
+        </div>
+        <div class="date-card">
+          <span id="today"></span
+          ><strong>Your next post<br />starts here.</strong>
+        </div>
+      </section>
+      <div class="conversation-banner">
+        <strong>Talk through your ideas. Follow the story here.</strong
+        ><span
+          >Use the desk yourself, or connect an agent to keep your writing
+          record up to date.</span
+        >
+      </div>
+      <form id="capture" class="capture">
+        <span aria-hidden="true">＋</span
+        ><label class="sr-only" for="quickTitle">New idea</label
+        ><input
+          id="quickTitle"
+          maxlength="250"
+          required
+          placeholder="What's on your mind? Capture an idea…"
+          autocomplete="off"
+        /><button type="submit" class="primary">
+          Add idea <span aria-hidden="true">↗</span>
+        </button>
+      </form>
+      <section class="workspace">
+        <div class="workspace-title">
+          <div>
+            <span class="eyebrow">THE WORK IN PROGRESS</span>
+            <h2 id="viewTitle">Your writing pipeline</h2>
+          </div>
+          <span id="summary"></span>
+        </div>
+        <div class="toolbar">
+          <label class="search"
+            ><span aria-hidden="true">⌕</span
+            ><input
+              id="search"
+              type="search"
+              placeholder="Find an idea or a phrase"
+              aria-label="Search ideas" /></label
+          ><label class="sr-only" for="stageFilter">Filter by stage</label
+          ><select id="stageFilter">
+            <option value="">Every stage</option>
+          </select>
+          <div class="view-switch">
+            <button id="boardView" class="selected" aria-pressed="true">
+              Board</button
+            ><button id="listView" aria-pressed="false">List</button>
+          </div>
+        </div>
+        <div id="loadError" role="alert" hidden></div>
+        <div id="board"></div>
+      </section>
+      <footer>
+        Keep the thought. Shape the story.
+        <span>Publication stays a deliberate decision.</span>
+      </footer>
+    </main>
+    <dialog id="editor">
+      <form id="editForm">
+        <div class="editor-top">
+          <span class="eyebrow">THE WRITING ROOM</span
+          ><button
+            type="button"
+            class="icon"
+            id="closeEditor"
+            aria-label="Close editor"
+          >
+            ×
+          </button>
+        </div>
+        <input
+          id="title"
+          name="title"
+          class="title-input"
+          aria-label="Working title"
+          placeholder="Give your idea a working title"
+          maxlength="250"
+          required
+        />
+        <div class="editor-meta">
+          <label>Stage<select name="stage" id="stage"></select></label
+          ><label
+            >Format<select name="format">
+              <option>Practical article</option>
+              <option>Personal reflection</option>
+              <option>Book discussion</option>
+              <option>Philosophy</option>
+              <option>Other</option>
+            </select></label
+          ><label
+            >Target date · confirm timezone separately<input
+              type="date"
+              name="target_date"
+          /></label>
+        </div>
+        <p id="stageHelp" class="hint">
+          Stages track your progress. Changing a stage does not publish or
+          schedule a post.
+        </p>
+        <div class="tabs" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-tab="conversation"
+          >
+            01 &nbsp; Conversation</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="brief"
+          >
+            02 &nbsp; Brief</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="draft"
+          >
+            03 &nbsp; Draft</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="review"
+          >
+            04 &nbsp; Review
+          </button>
+        </div>
+        <section data-panel="conversation">
+          <div class="voice-note">
+            A connected agent can save useful context from your conversations.
+            You can also edit it here. Connecting an agent requires separate
+            setup.
+          </div>
+          <label
+            >Where our conversation stands<textarea
+              name="conversation"
+              rows="4"
+              placeholder="The idea, why it matters, and what we have worked out so far."
+            ></textarea></label
+          ><label
+            >Decisions we have made<textarea
+              name="decisions"
+              rows="3"
+              placeholder="The angle we chose, what to include, and what to leave out."
+            ></textarea></label
+          ><label
+            >Still to resolve<textarea
+              name="questions"
+              rows="3"
+              placeholder="Questions, missing details, or claims to check."
+            ></textarea></label
+          ><label
+            >Next action<input
+              name="next_action"
+              placeholder="What happens next, and who is taking it forward?" /></label
+          ><label
+            >Chat reference<input
+              name="chat_reference"
+              placeholder="The chat title or a reference supplied by you."
+          /></label>
+          <div id="stageGuide" class="stage-guide"></div>
+          <h3>How this story has moved</h3>
+          <div id="activity" aria-live="polite"></div>
+          <p class="hint">
+            Saved summaries and decisions, not a live transcript. Updates appear
+            while this page is open; unsaved edits are never replaced.
+          </p>
+        </section>
+        <section data-panel="brief" hidden>
+          <div class="voice-note">
+            Make this your own: describe your preferred voice in
+            editorial-profile.md.
+          </div>
+          <label
+            >The angle<textarea
+              name="angle"
+              rows="3"
+              placeholder="What's the real question? What should the reader take away?"
+            ></textarea></label
+          ><label
+            >Who is this for?<input
+              name="audience"
+              placeholder="A curious reader, operations leaders, fellow parents…" /></label
+          ><label
+            >Your observations & experience<textarea
+              name="experience"
+              rows="4"
+              placeholder="What happened? What surprised you? Keep the details that make it yours."
+            ></textarea></label
+          ><label
+            >Research & sources<textarea
+              name="sources"
+              rows="4"
+              placeholder="Links, books, quotes to check, claims that need evidence…"
+            ></textarea></label
+          ><label
+            >Editorial notes<textarea
+              name="notes"
+              rows="3"
+              placeholder="Related posts, constraints, questions, image ideas, next action…"
+            ></textarea>
+          </label>
+        </section>
+        <section data-panel="draft" hidden>
+          <div class="draft-toolbar">
+            <span>Article draft · plain text or Markdown</span
+            ><span id="wordCount">0 words</span>
+          </div>
+          <textarea
+            id="draft"
+            name="draft"
+            class="draft-area"
+            placeholder="Start with something real. The polished version can wait."
+            aria-label="Article draft"
+          ></textarea>
+          <p class="hint">
+            Keep research and editorial notes in the brief. This space is for
+            the article itself.
+          </p>
+        </section>
+        <section data-panel="review" hidden>
+          <h3>Before it leaves the desk</h3>
+          <div class="checks">
+            <label
+              ><input type="checkbox" value="voice" />Sounds like you; no
+              invented experiences</label
+            ><label
+              ><input type="checkbox" value="facts" />Claims, quotations, and
+              sources checked</label
+            ><label
+              ><input type="checkbox" value="structure" />Clear angle, useful
+              examples, satisfying ending</label
+            ><label
+              ><input type="checkbox" value="disclosure" />Links, formatting,
+              and assistance disclosure reviewed</label
+            >
+          </div>
+          <label
+            >Publication or edit link<input
+              name="wordpress_url"
+              type="url"
+              placeholder="https://example.com/my-story" /></label
+          ><label
+            >Narration<select name="narration">
+              <option>Not started</option>
+              <option>Pending</option>
+              <option>Verified</option>
+              <option>Opted out</option>
+              <option>Needs attention</option>
+            </select></label
+          >
+          <div class="handoff-box">
+            <h3>Continue the conversation</h3>
+            <p>
+              With an agent connected to this desk, mention the idea’s title to
+              continue working. Otherwise download a handoff for your writing
+              assistant.
+            </p>
+            <a id="handoff" class="secondary" href="#">↓ Download handoff</a>
+            <p class="hint">
+              Publishing requires a separate connection to your publishing
+              service and your explicit instruction. Narration is optional and
+              tracked separately.
+            </p>
+          </div>
+          <button type="button" id="historyButton" class="text-button">
+            View saved versions
+          </button>
+          <div id="history"></div>
+        </section>
+        <div class="editor-bottom">
+          <button type="button" id="archiveButton" class="text-button">
+            Archive idea</button
+          ><span id="saveState" role="status"></span
+          ><button type="submit" class="primary" id="saveButton">
+            Save changes
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="workflowDialog">
+      <div class="editor-top">
+        <h2>From conversation to publication</h2>
+        <button id="closeWorkflow" class="icon" aria-label="Close workflow">
+          ×
+        </button>
+      </div>
+      <p class="hint">
+        This desk is your writing record. You or a connected agent update each
+        idea when the work reaches the next stage. The app does not run an agent
+        or publish posts.
+      </p>
+      <div id="workflowSteps"></div>
+    </dialog>
+    <dialog id="profileDialog">
+      <div class="editor-top">
+        <h2>Your writing voice</h2>
+        <button
+          id="closeProfile"
+          class="icon"
+          aria-label="Close writing profile"
+        >
+          ×
+        </button>
+      </div>
+      <pre id="profileText"></pre>
+    </dialog>
+    <div id="toast" role="status" hidden></div>
+  </body>
+</html>

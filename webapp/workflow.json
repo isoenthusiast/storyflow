@@ -1,0 +1,51 @@
+[
+  {
+    "stage": "idea",
+    "label": "Idea",
+    "conversation": "Tell me what caught your attention, even if it is unfinished.",
+    "record": "Your observations, a working title, the possible angle, and open questions.",
+    "move": "When you ask to develop the idea, I clarify the reader and takeaway and begin research or drafting."
+  },
+  {
+    "stage": "research",
+    "label": "Research",
+    "conversation": "We explore the angle and check what needs evidence.",
+    "record": "Sources, verified claims, uncertainties, related posts, and the agreed direction.",
+    "move": "When enough material supports a useful draft, I start writing. Personal reflections can go straight to drafting."
+  },
+  {
+    "stage": "drafting",
+    "label": "Drafting",
+    "conversation": "I write in your voice and incorporate the experiences you have supplied.",
+    "record": "The current full draft, alternatives considered, and unresolved questions.",
+    "move": "A complete draft moves to review. Saving a draft to an external service requires authorization and a configured connection."
+  },
+  {
+    "stage": "review",
+    "label": "Review",
+    "conversation": "You react naturally: change the opening, add an example, soften a claim, or keep this version.",
+    "record": "Your feedback and decisions, revised text, evidence checks, and the your publishing service draft link when available.",
+    "move": "When the draft is reviewed and material issues are resolved, it becomes ready. Bigger changes can return it to drafting or research."
+  },
+  {
+    "stage": "ready",
+    "label": "Ready",
+    "conversation": "The article is prepared. You decide whether and when it goes live.",
+    "record": "The reviewed draft and a clear next action: awaiting publication instruction, or carrying out an instruction already given.",
+    "move": "An explicit publish request goes to published after verification; a schedule request goes to scheduled after your publishing service confirms it. Ready alone grants no publication permission."
+  },
+  {
+    "stage": "scheduled",
+    "label": "Scheduled · optional",
+    "conversation": "You specify when to publish. Confirm the date, time, and timezone.",
+    "record": "The confirmed your publishing service schedule and link. Exact time and timezone are retained in decisions.",
+    "move": "After the publication time, ask me to check it. A connected agent can verify the live post. Narration requires a separate integration and request. No background watcher is installed."
+  },
+  {
+    "stage": "published",
+    "label": "Published",
+    "conversation": "I confirm the live article and report any remaining narration work.",
+    "record": "The verified public link, publication result, and separate narration status.",
+    "move": "If narration is requested, mark it complete only after verifying the public player. Later revisions keep the post’s publication status and are tracked in the timeline and next action."
+  }
+]
