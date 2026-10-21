@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — release candidate
+## 0.1.0 — 2026-10-21
 
 - Standalone editorial desk with seven stages, drafts, review checks, search,
   archive/restore, saved versions, and an activity timeline.
